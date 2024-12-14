@@ -22,7 +22,6 @@ namespace Portfolio.Controllers
             _tokenService = tokenService;
         }
 
-        // POST: /api/account/register
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto model)
         {
@@ -41,13 +40,11 @@ namespace Portfolio.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Generate JWT token after successful registration
             var token = _tokenService.CreateToken(user);
 
             return Ok(new { token });
         }
 
-        // POST: /api/account/login
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto model)
         {
@@ -65,13 +62,11 @@ namespace Portfolio.Controllers
             if (!result.Succeeded)
                 return Unauthorized(new { message = "Invalid login attempt." });
 
-            // Generate JWT token for successful login
             var token = _tokenService.CreateToken(user);
 
             return Ok(new { token });
         }
 
-        // POST: /api/account/logout
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
